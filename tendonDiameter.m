@@ -1,6 +1,6 @@
 % Script for automatic tendon-area/volume measurements.
 %
-% Author: Max Hess <hessmax@student.ethz.ch>
+% Author: Max Hess <hess.max.timo@gmail.com>
 % Created: April 2018
 % Modified: -
 %
@@ -21,8 +21,8 @@
 clear all;
 
 root = 'E:/Max_Hess/tendonDiameterFabian/'; %Specify your working diretory here
-data_path = strcat(root, 'Data/'); %Name of the folder containing the images
-results_path = strcat(root, 'Results/');
+data_path = strcat(root, 'Data/Tendon2/'); %Name of the folder containing the images
+results_path = strcat(root, 'Results/Tendon2/');
 visualize = true; %set to true for visualization
 
 if ~(7==exist(results_path, 'dir'))
@@ -40,7 +40,7 @@ otsu_threshold = otsuthresh(counts);
 %Apply the calculated threhsold
 bw_stack = zeros(size(stack), 'logical');
 for i = 1:size(stack, 3)
-    bw_stack(:,:,i) = imbinarize(stack(:,:,i), otsu_threshold);
+    bw_stack(:,:,i) = imbinarize(stack(:,:,i), otsu);
 end
 bw_stack = ~bw_stack;
 
