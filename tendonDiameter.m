@@ -13,12 +13,14 @@
 % Instructions:
 % Put your images in a single folder labeled 'Data' the same directory as
 % the .m files and run the script. A new folder Results containing an
-% Excel-sheed with the results, a tiff-visualization of the thresholding
+% Excel-sheet with the results, a tiff-visualization of the thresholding
 % and a plot of the results will be generated.
 %
 
 
 clear all;
+mfilepath = fileparts(which(mfilename));
+addpath(fullfile(mfilepath, 'functions'));
 
 root = 'E:/Max_Hess/tendonDiameterFabian/'; %Specify your working diretory here
 data_path = strcat(root, 'Data/Tendon2/'); %Name of the folder containing the images
@@ -40,7 +42,7 @@ otsu_threshold = otsuthresh(counts);
 %Apply the calculated threhsold
 bw_stack = zeros(size(stack), 'logical');
 for i = 1:size(stack, 3)
-    bw_stack(:,:,i) = imbinarize(stack(:,:,i), otsu);
+    bw_stack(:,:,i) = imbinarize(stack(:,:,i), otsu_threshold);
 end
 bw_stack = ~bw_stack;
 

@@ -5,7 +5,7 @@ function [imageStack, labels] = loadImageStack(folder, gray)
         label = files(i).name;
         label_fields = strsplit(label, '.');
         labels{i} = label_fields{1};
-        image = imread(strcat(folder, label));
+        image = imread(fullfile(folder, label));
         if gray
             image = rgb2gray(image);
             image = mat2gray(image);
