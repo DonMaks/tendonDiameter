@@ -66,6 +66,8 @@ handles.green = cat(3, zeros(size(handles.oldmask)),ones(size(handles.oldmask)),
 handles.discard = false;
 handles.mask = ones(size(handles.image));
 
+% Enlarge figure to full screen.
+set(gcf, 'units','normalized','outerposition',[0 0.05 1 0.95]);
 
 % Update handles structure
 guidata(hObject, handles);

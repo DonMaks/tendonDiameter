@@ -100,6 +100,7 @@ end
 discard_mask = ones(size(stack(:, :, 1)));
 visualization_stack = zeros([size(stack), 3]);
 areas = zeros(sum(~discard_image), 1);
+areasPx = zeros(sum(~discard_image), 1);
 final_zpos = zeros(size(areas));
 final_rel_zpos = zeros(size(areas));
 final_names = cell(size(areas));
@@ -111,6 +112,7 @@ for i = 1:size(stack, 3);
     else
         mask = manual_bw_stack(:, :, i);
         visualization_stack(:, :, i, :) = imoverlay2D(image, mask, [0, 0.5, 0]);
+        areasPx(j) = sum(mask(:));
         areas(j) = sum(mask(:)) * prod(image_scale(1:2));
         final_zpos(j) = zpos(i);
         final_rel_zpos(j) = relative_zpos(i);
@@ -128,7 +130,7 @@ fig = gcf;
 print(fullfile(results_path, 'Plot'), '-dpng');
 
 %save the results
-Results = struct('name', final_names, 'zpos', num2cell(final_zpos), 'relative_zpos', ...
-                 num2cell(final_rel_zpos), 'area', num2cell(areas));
+Results = struct('name', final_names, 'zpos [um]', num2cell(final_zpos), 'relative_zpos', ...
+                 num2cell(final_rel_zpos), 'area [um^2]', num2cell(areas), 'area [px]', num2cell(areasPx));
 results_table = struct2table(Results);
 writetable(results_table, fullfile(results_path, 'Results.xls'));
